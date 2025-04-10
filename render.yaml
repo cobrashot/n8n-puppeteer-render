@@ -12,12 +12,10 @@ services:
         value: 5678
       - key: NODE_FUNCTION_ALLOW_EXTERNAL
         value: puppeteer
-      - key: N8N_METRICS
+      - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
         value: "true"
-      - key: N8N_HIRING_BANNER_ENABLED
-        value: "false"
-      - key: N8N_VERSION_NOTIFICATIONS_ENABLED
-        value: "false"
+      - key: PUPPETEER_EXECUTABLE_PATH
+        value: /usr/bin/google-chrome-stable
     disk:
       name: n8n-data
       mountPath: /home/node/.n8n
