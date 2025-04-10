@@ -1,24 +1,54 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:latest-debian
 
 USER root
 
-# Install dependencies required for Chrome
-RUN apt-get update \
-    && apt-get install -y wget gnupg ca-certificates \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
+# Install Puppeteer dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libc6 \
+    libcairo2 \
+    libcups2 \
+    libdbus-1-3 \
+    libexpat1 \
+    libfontconfig1 \
+    libgbm1 \
+    libgcc1 \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libstdc++6 \
+    libx11-6 \
+    libx11-xcb1 \
+    libxcb1 \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxi6 \
+    libxrandr2 \
+    libxrender1 \
+    libxss1 \
+    libxtst6 \
+    lsb-release \
+    wget \
+    xdg-utils \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-# Install puppeteer so it's available for n8n
-RUN npm install puppeteer@latest
+# Install Puppeteer globally with Chromium
+RUN npm install -g puppeteer
 
-# Set environment variables
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable \
-    NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer
+# Set NODE_FUNCTION_ALLOW_EXTERNAL for n8n
+ENV NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer
 
 # Switch back to node user
 USER node
