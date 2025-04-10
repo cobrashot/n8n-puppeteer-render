@@ -45,10 +45,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Puppeteer globally with Chromium
-RUN npm install -g puppeteer
+RUN npm install -g puppeteer@18.1.0
 
 # Set NODE_FUNCTION_ALLOW_EXTERNAL for n8n
 ENV NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer
 
-# Switch back to node user
-USER node
+# Keep running as root (don't switch to node user)
+# This avoids the permission error we're seeing
