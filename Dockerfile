@@ -50,8 +50,17 @@ RUN npm install -g puppeteer@18.1.0
 # Set NODE_FUNCTION_ALLOW_EXTERNAL for n8n
 ENV NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer
 
-# Fix directory permissions
-RUN mkdir -p /opt/render/.n8n/.n8n && \
+# Create directories and set permissions
+RUN mkdir -p /opt/render/.n8n && \
     chmod -R 777 /opt/render/.n8n
 
-# Set n8n home directory to a location where we have write per
+# Create a startup script
+RUN echo '#!/bin/bash\n\
+mkdir -p /opt/render/.n8n/database\n\
+chmod -R 777 /opt/render/.n8n\n\
+export N8N_USER_FOLDER=/opt/render/.n8n\n\
+exec n8n start' > /start.sh && \
+chmod +x /start.sh
+
+# Set the startup command
+ENTRYPOINT ["/start.sh"]
