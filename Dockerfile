@@ -50,5 +50,8 @@ RUN npm install -g puppeteer@18.1.0
 # Set NODE_FUNCTION_ALLOW_EXTERNAL for n8n
 ENV NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer
 
-# Keep running as root (don't switch to node user)
-# This avoids the permission error we're seeing
+# Fix directory permissions
+RUN mkdir -p /opt/render/.n8n/.n8n && \
+    chmod -R 777 /opt/render/.n8n
+
+# Set n8n home directory to a location where we have write per
