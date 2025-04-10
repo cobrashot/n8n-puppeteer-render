@@ -5,17 +5,9 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: N8N_PORT
-        value: 5678
-      - key: PORT
-        value: 5678
       - key: NODE_FUNCTION_ALLOW_EXTERNAL
         value: puppeteer
-      - key: DB_TYPE
-        value: sqlite
-      - key: DB_SQLITE_VACUUM_ON_STARTUP
-        value: "true"
     disk:
       name: n8n-data
-      mountPath: /opt/render/.n8n
+      mountPath: /home/node/.n8n
       sizeGB: 10
