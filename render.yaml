@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: n8n
+    env: docker
+    repo: https://github.com/cobrashot/n8n-puppeteer-render.git
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: N8N_PORT
+        value: 5678
+      - key: PORT
+        value: 5678
+      - key: NODE_FUNCTION_ALLOW_EXTERNAL
+        value: puppeteer
+      - key: N8N_METRICS
+        value: true
+      - key: N8N_HIRING_BANNER_ENABLED
+        value: false
+      - key: N8N_VERSION_NOTIFICATIONS_ENABLED
+        value: false
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 10
