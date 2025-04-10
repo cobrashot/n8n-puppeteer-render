@@ -11,8 +11,10 @@ services:
         value: 5678
       - key: NODE_FUNCTION_ALLOW_EXTERNAL
         value: puppeteer
-      - key: N8N_USER_FOLDER
-        value: /opt/render/.n8n
+      - key: DB_TYPE
+        value: sqlite
+      - key: DB_SQLITE_VACUUM_ON_STARTUP
+        value: "true"
     disk:
       name: n8n-data
       mountPath: /opt/render/.n8n
